@@ -2,6 +2,8 @@ package entity;
 
 import util.DateTimeUtil;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -10,29 +12,31 @@ public class Order {
     private String nameCustomer;
     private String product;
     private double totalPrice;
-    private Date createdAt;
+    private String createdAt;
     private int status;
 
     public Order() {
     }
 
-    public Order(String id, String nameCustomer, String product, double totalPrice) {
+    public Order(String id, String nameCustomer, String product, double totalPrice, int status) {
+        DateTimeUtil dateFormatted = new DateTimeUtil();
         this.id = id;
         this.nameCustomer = nameCustomer;
         this.product = product;
         this.totalPrice = totalPrice;
+        this.createdAt = dateFormatted.formatDateToString(new Date());
+        this.status = status;
     }
 
     @Override
     public String toString() {
-        return "Order{" +
-                "id='" + id + '\'' +
-                ", nameCustomer='" + nameCustomer + '\'' +
-                ", product='" + product + '\'' +
-                ", totalPrice=" + totalPrice +
-                ", createdAt=" + this.getCreatedAtString() +
-                ", status=" + this.getStatusName() +
-                '}';
+        return String.format("%5s%15s%5s | %5s%15s%5s | %5s%15s%5s | %5s%15s%5s | %5s%15s%5s | %5s%15s%5s\n",
+                "", this.id, "",
+                "", this.nameCustomer, "",
+                "", this.product, "",
+                "", this.totalPrice, "",
+                "", this.createdAt, "",
+                "", this.getStatusName(), "");
     }
 
     private String getStatusName() {
@@ -44,9 +48,6 @@ public class Order {
         return this.status == 2 ? "Paid" : "";
     }
 
-    private String getCreatedAtString() {
-        return DateTimeUtil.formatDateToString(this.createdAt);
-    }
 
     public String getId() {
         return id;
@@ -80,11 +81,11 @@ public class Order {
         this.totalPrice = totalPrice;
     }
 
-    public Date getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
 

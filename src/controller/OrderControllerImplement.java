@@ -4,8 +4,11 @@ import com.sun.org.apache.xpath.internal.operations.Or;
 import entity.Order;
 import model.OrderModel;
 import model.OrderModelImplement;
+import util.DateTimeUtil;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -18,6 +21,31 @@ public class OrderControllerImplement implements OrderController {
         this.scanner = new Scanner(System.in);
     }
 
+    private Boolean validate(String id, String nameCustomer, String product, double totalPrice, int status) {
+        boolean valid =true;
+        if (!id.contains("Order")) {
+            System.out.println("Invalid Id.");
+            valid =false;
+        }
+        if (nameCustomer.matches(".*\\d.*")) {
+            System.out.println("Invalid name customer.");
+            valid =false;
+        }
+        if (product.length() == 0) {
+            System.out.println("Invalid product");
+            valid =false;
+        }
+        if (totalPrice < 0) {
+            System.out.println("Invalid price");
+            valid =false;
+        }
+        if (status != 1 && status != 2 && status != 0) {
+            System.out.println("Invalid status.");
+            valid =false;
+        }
+        return valid;
+    }
+
     @Override
     public void createNewOrder() {
         System.out.println("Please enter order id: ");
@@ -28,11 +56,17 @@ public class OrderControllerImplement implements OrderController {
         String product = scanner.nextLine();
         System.out.println("Please enter total price: ");
         double totalPrice = scanner.nextDouble();
-        Order order = new Order(id, nameCustomer, product, totalPrice);
-        if (orderModel.save(order)){
-            System.out.println("Action success.");
-        }else {
-            System.out.println("Action failed.");
+        System.out.println("Please enter status: ");
+        int status = scanner.nextInt();
+        if (validate(id, nameCustomer, product, totalPrice, status)) {
+            Order order = new Order(id, nameCustomer, product, totalPrice, status);
+            if (orderModel.save(order)) {
+                System.out.println("Action success.");
+            } else {
+                System.out.println("Action failed.");
+            }
+        } else {
+            System.out.println("Please input valid values.");
         }
     }
 
@@ -51,7 +85,22 @@ public class OrderControllerImplement implements OrderController {
 
     @Override
     public void revenueByTime() {
-
+        DateTimeUtil dateTimeUtil = new DateTimeUtil();
+        System.out.println("Please enter start time: ");
+        String startTime = scanner.nextLine();
+        System.out.println("Please enter end time: ");
+        String endTime = scanner.nextLine();
+        try {
+            Date startDate = dateTimeUtil.parseDateFromString(startTime);
+            Date endDate = dateTimeUtil.parseDateFromString(endTime);
+            if (startDate.after(endDate)) {
+                System.out.println("invalid");
+            } else {
+                orderModel.revenueByTime(startDate, endDate);
+            }
+        } catch (Exception e) {
+            System.out.println("Invalid input data");
+        }
     }
 
     @Override
