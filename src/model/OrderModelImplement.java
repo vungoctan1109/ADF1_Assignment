@@ -14,13 +14,13 @@ public class OrderModelImplement implements OrderModel {
     {
         list = new ArrayList<>();
         list.add(new Order("Order001", "Vu Ngoc Tan", "1 can gao", 100000, 1));
-        list.add(new Order("Order002", "Vu Ngoc Tuan", "2 can tao", 200000,2));
-        list.add(new Order("Order003", "Vu Ngoc Tun", "1 can ca chua", 400000,0));
-        list.add(new Order("Order004", "Vu Ngoc Tang", "1 can khoai", 500000,0));
-        list.add(new Order("Order005", "Vu Ngoc Tu", "2 can dua", 200000,1));
-        list.add(new Order("Order006", "Vu Ngoc Trinh", "4 can xoai", 300000,2));
-        list.add(new Order("Order007", "Vu Ngoc Trang", "1 can vai", 600000,1));
-        list.add(new Order("Order008", "Vu Ngoc Thuy", "2 can chuoi", 50000,2));
+        list.add(new Order("Order002", "Vu Ngoc Tuan", "2 can tao", 200000, 2));
+        list.add(new Order("Order003", "Vu Ngoc Tun", "1 can ca chua", 400000, 0));
+        list.add(new Order("Order004", "Vu Ngoc Tang", "1 can khoai", 500000, 0));
+        list.add(new Order("Order005", "Vu Ngoc Tu", "2 can dua", 200000, 1));
+        list.add(new Order("Order006", "Vu Ngoc Trinh", "4 can xoai", 300000, 2));
+        list.add(new Order("Order007", "Vu Ngoc Trang", "1 can vai", 600000, 1));
+        list.add(new Order("Order008", "Vu Ngoc Thuy", "2 can chuoi", 50000, 2));
     }
 
     public OrderModelImplement() {
@@ -45,7 +45,7 @@ public class OrderModelImplement implements OrderModel {
     }
 
     @Override
-    public void revenueByTime(Date startDate , Date endDate) {
+    public void revenueByTime(Date startDate, Date endDate) {
         Boolean noMatchedOrder = true;
         DateTimeUtil dateTimeUtil = new DateTimeUtil();
         double totalPrice = 0;
@@ -53,7 +53,7 @@ public class OrderModelImplement implements OrderModel {
             Date createDate = dateTimeUtil.parseDateFromString(list.get(i).getCreatedAt());
             if (!createDate.before(startDate) && !createDate.after(endDate) && list.get(i).getStatus() == 2) {
                 System.out.println(findById(list.get(i).getId()));
-                noMatchedOrder =false;
+                noMatchedOrder = false;
                 totalPrice += list.get(i).getTotalPrice();
             }
         }

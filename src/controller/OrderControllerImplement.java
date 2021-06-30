@@ -22,26 +22,26 @@ public class OrderControllerImplement implements OrderController {
     }
 
     private Boolean validate(String id, String nameCustomer, String product, double totalPrice, int status) {
-        boolean valid =true;
+        boolean valid = true;
         if (!id.contains("Order")) {
             System.out.println("Invalid Id.");
-            valid =false;
+            valid = false;
         }
         if (nameCustomer.matches(".*\\d.*")) {
             System.out.println("Invalid name customer.");
-            valid =false;
+            valid = false;
         }
         if (product.length() == 0) {
             System.out.println("Invalid product");
-            valid =false;
+            valid = false;
         }
         if (totalPrice < 0) {
             System.out.println("Invalid price");
-            valid =false;
+            valid = false;
         }
         if (status != 1 && status != 2 && status != 0) {
             System.out.println("Invalid status.");
-            valid =false;
+            valid = false;
         }
         return valid;
     }
