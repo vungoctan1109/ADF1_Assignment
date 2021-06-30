@@ -59,7 +59,7 @@ public class OrderModelImplement implements OrderModel {
         }
         System.out.printf("Total Price: %.2f", totalPrice);
         if (noMatchedOrder) {
-            System.out.println("No match order");
+            System.out.printf("\nHave no finished order from time %s to %s", dateTimeUtil.formatDateToString(startDate), dateTimeUtil.formatDateToString(endDate));
         }
     }
 

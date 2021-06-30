@@ -24,15 +24,15 @@ public class OrderControllerImplement implements OrderController {
     private Boolean validate(String id, String nameCustomer, String product, double totalPrice, int status) {
         boolean valid = true;
         if (!id.contains("Order")) {
-            System.out.println("Invalid Id.");
+            System.out.println("Invalid Id. Must begin with Order");
             valid = false;
         }
         if (nameCustomer.matches(".*\\d.*")) {
-            System.out.println("Invalid name customer.");
+            System.out.println("Invalid name customer.Must not contain numbers.");
             valid = false;
         }
         if (product.length() == 0) {
-            System.out.println("Invalid product");
+            System.out.println("Invalid product. This field cannot be blank.");
             valid = false;
         }
         if (totalPrice < 0) {
@@ -79,7 +79,7 @@ public class OrderControllerImplement implements OrderController {
             System.out.println("Order is not found.");
             return;
         }
-        System.out.printf("Found 1 order match that id %s", id);
+        System.out.printf("Found 1 order match id %s\n", id);
         System.out.println(order.toString());
     }
 
